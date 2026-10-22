@@ -7,16 +7,16 @@ Ton but: Prendre soin de ton amie la plante""")
 
 
 nom_plante = input('Donne un nom à ta plante ')
-petales = demander_nombre_entier_positif('Combien de pétales a ta plante ? ')
-feuilles = demander_nombre_entier_positif('Combien de feuilles a ta plante ? ')
+petales = demander_nombre_entier_positif('Combien de pétales a ta plante ? ', 1)
+feuilles = demander_nombre_entier_positif('Combien de feuilles a ta plante ? ', 1)
 
 plante = Plante(nom_plante, feuilles, petales)
 print(plante)
 
 nb_tours = 0
 while plante.est_vivante():
-        ajout_eau = demander_nombre_entier_positif("Avec combien de litres d'eau arroses tu ta plante ? ")
-        ajout_engrais = demander_nombre_entier_positif("Combien de kilos d'engrais donnes tu à ta plante ? ")
+        ajout_eau = demander_nombre_entier_positif("Avec combien de litres d'eau arroses tu ta plante ? ", 0)
+        ajout_engrais = demander_nombre_entier_positif("Combien de kilos d'engrais donnes tu à ta plante ? ", 0)
         plante.recevoir_eau(ajout_eau)
         plante.recevoir_engrais(ajout_engrais)
         plante.consommation_eau()
