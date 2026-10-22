@@ -22,13 +22,13 @@ class Plante:
         return f'{self.nom} est une jolie plante avec {self.feuilles} feuilles et {self.petales} pétales'
 
     def recevoir_eau(self, ajout_eau):
-        self.niveau_eau = self.niveau_eau+ajout_eau
+        self.niveau_eau = self.niveau_eau + ajout_eau
 
     def recevoir_engrais(self, ajout_engrais):
         self.niveau_engrais = self.niveau_engrais+ajout_engrais
 
     def consommation_eau(self):
-        self.niveau_eau = self.niveau_eau-self.besoin_eau
+        self.niveau_eau = max(0, self.niveau_eau-self.besoin_eau)
 
     def consommation_engrais(self):
-        self.niveau_engrais = self.niveau_engrais-self.besoin_engrais
+        self.niveau_engrais = max(0, self.niveau_engrais-self.besoin_engrais)
