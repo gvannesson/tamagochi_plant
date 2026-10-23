@@ -195,7 +195,6 @@ class Photosynthesis:
         -- C_flux (g C m-2 d-1) <- CO2_flux (umol CO2 m-2 s-1) * umol2mol = 1e-06 *  Cmol = 0.012011 * kg2g = 1000 * days2seconds = 86400
 
         """
-        print("Run the actual photosynthesis...")
 
         outputs=dict()
 
@@ -252,7 +251,6 @@ class PotentialGrowth:
         Solen FARRA
 
         """
-        print("Run a potential area...")
 
         outputs=dict()
 
@@ -308,7 +306,6 @@ class PotentialGrowth:
          --- No need, if its just an estimation of optimum carbon produced without takin account carbon cost
 
         """
-        print("Run a potential photosynthesis...")
 
         outputs=dict()
 
@@ -369,7 +366,6 @@ class Competition:
         # --- We can develop the same model but with a Nitrogen_Demand input (with a potential nitrogen demand and a nitrogen deficit ?)
 
         """
-        print("Run the actual carbon deficit...")
 
         outputs=dict()
 
@@ -408,7 +404,6 @@ class Competition:
         Solen FARRA
 
         """
-        print("Run the actual nitrogen competition status of each organ...") 
 
         outputs=dict()
 
@@ -463,7 +458,7 @@ class Competition:
         Solen FARRA
 
         """
-        print("Run the actual nitrogen competition status of each organ...") 
+      
 
         outputs=dict()
 
@@ -553,7 +548,6 @@ class Nitrogen:
         Solen FARRA
 
         """
-        print("Run the potential nitrogen content...")
 
         outputs=dict()
 
@@ -596,7 +590,7 @@ class Nitrogen:
         #NOTE : # The nitrogen demand cannot be > 0 
 
         """
-        print("Run the actual nitrogen demand...")
+    
 
         outputs=dict()
 
@@ -637,7 +631,7 @@ class Nitrogen:
         Solen Farra
 
         """
-        print("Run the nitrogen export ponderation...")
+    
 
         outputs=dict()
 
@@ -689,7 +683,7 @@ class Nitrogen:
         cf leaf_nitrogen_content method : needs to be updated
 
         """
-        print("Run the nitrogen import ponderation...")
+        
 
         outputs=dict()
         
@@ -732,7 +726,7 @@ class Nitrogen:
         Solen Farra
 
         """
-        print("Run the actual nitrogen export...")
+       
 
         outputs=dict()
 
@@ -783,7 +777,7 @@ class Nitrogen:
         -- NitrogenDemand > 0 == NitrogenStorage
 
         """
-        print("Run the actual nitrogen import...")
+    
 
         outputs=dict()
 
@@ -829,7 +823,7 @@ class Nitrogen:
             EcoMeristem model
 
         """
-        print("Run the actual light use by nitrogen unit...")
+        
 
         outputs=dict()
 
@@ -879,7 +873,7 @@ class Nitrogen:
             FUN 2.0 model
 
         """
-        print("Run the carbon cost of nitrogen re-allocation...")
+        
 
         outputs = dict()
 
@@ -927,7 +921,7 @@ class Nitrogen:
             FUN 2.0 model
 
         """
-        print("Run the nitrogen content...")
+      
 
         outputs = dict()
 
@@ -976,7 +970,7 @@ class Nitrogen:
             FUN 2.0 model
 
         """
-        print("Run the C:N ratio...")
+      
 
         outputs = dict()
 
@@ -1018,7 +1012,7 @@ class Nitrogen:
         Solen FARRA
 
         """
-        print("Run the nitrogen storage...")
+    
 
         outputs = dict()
 
@@ -1086,7 +1080,7 @@ class Carbon:
         Solen FARRA
 
         """
-        print("Run the carbon available for growth...")
+        
 
         outputs = dict()
 
@@ -1129,7 +1123,7 @@ class Carbon:
         Solen FARRA
 
         """
-        print("Run the carbon demand...")
+      
 
         outputs = dict()
 
@@ -1165,7 +1159,7 @@ class Carbon:
         Solen FARRA
 
         """
-        print("Run the carbon storage...")
+       
 
         outputs = dict()
 
@@ -1211,7 +1205,7 @@ class Carbon:
         Lemaire et al. (2008)
 
         """
-        print("Run the actual carbon export...")
+      
 
         outputs=dict()
 
@@ -1258,7 +1252,7 @@ class Carbon:
         Lemaire et al. (2008)
 
         """      
-        print("Run the actual carbon import...")
+        
         
         outputs=dict()
 
@@ -1307,7 +1301,7 @@ class Carbon:
             final carbon content (g/g)
 
         """       
-        print("Run the actual carbon content...")
+       
         
         outputs=dict()
 
@@ -1391,7 +1385,7 @@ class Growth:
             the above part of the plant
 
         """
-        print("Run the leaf area evolution...")
+        
 
         outputs=dict()
 
@@ -1508,7 +1502,7 @@ class Fall:
         Field (1983)
 
         """
-        print("Run organs fall...")
+       
 
         outputs = dict()
 
@@ -1565,7 +1559,7 @@ class Fall:
         Field (1983)
 
         """
-        print("Run organs fall...")
+       
 
         outputs = dict()
 
@@ -1630,7 +1624,7 @@ class Fall:
         Field (1983)
 
         """
-        print("Run fall thresholds (mecanistical hypothesis)...")
+       
 
         outputs = dict()
 
@@ -1673,7 +1667,7 @@ class Fall:
         Field (1983)
 
         """
-        print("Run fall thresholds (mecanistical hypothesis)...")
+      
 
         outputs = dict()
 
@@ -1716,7 +1710,7 @@ class Fall:
         Thomas (2013)
 
         """
-        print("Run fall thresholds (empirical hypothesis)...")
+       
 
         outputs = dict()
 
@@ -1762,7 +1756,6 @@ class Fall:
         Thomas (2013)
 
         """
-        print("Run fall thresholds (empirical hypothesis)...")
 
         outputs = dict()
 

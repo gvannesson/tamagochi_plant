@@ -24,7 +24,7 @@ class MaPlante :
 
     def calculer_azote(self):
 
-        from main import df_filtre
+        from data import df_filtre
 
         self.azote_tot = df_filtre['NitrogenContent'].sum() + self.niveau_engrais
 

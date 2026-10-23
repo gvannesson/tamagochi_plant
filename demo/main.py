@@ -31,7 +31,7 @@ while plant.est_vivante():
         print(plant.donner_indices())
         print(f'ta plante a {plant.points_sante} points de santé')
 
-        main.Run.faba_bean_plant_simulation(default = None, initial_step = 0, final_step = (nb_tours+1))
+        main.Run.faba_bean_plant_simulation(default = None, initial_step = 0, final_step = (nb_tours))
         print("Ta plante a changé !")
 
 print(f'ta plante est morte au bout de {nb_tours} jours')
