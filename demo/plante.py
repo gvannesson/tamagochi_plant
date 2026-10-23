@@ -3,7 +3,7 @@ import random
 
 SEUIL_BAS = 400
 SEUIL_HAUT = 500
-SANTE_MAX = 500
+SANTE_MAX = 10
 NB_TOURS_POUR_AUGMENTER_SANTE = 3
 
 
@@ -105,19 +105,3 @@ class MaPlante :
 
     ##############################################################################
 
-    def tour_de_jeu(self, df_filtre):
-        print(f"\n--- Tour de jeu pour {self.nom} ---")
-
-        # 1. On met à jour l'azote avec le nouveau DataFrame
-        self.calculer_azote(df_filtre)
-
-        # 2. On met à jour la santé en fonction des niveaux actuels
-        self.mettre_a_jour_sante()
-
-        # 3. On affiche l'état
-        print(f"Santé : {self.points_sante}/{SANTE_MAX}")
-        print(f"Azote total : {self.azote_tot}")
-
-        if not self.est_vivante():
-            print(f"Oh non ! {self.nom} est morte...")
-    
