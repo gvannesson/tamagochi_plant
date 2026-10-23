@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-import genericmodel
+import demo.aptos.genericmodel as genericmodel
 from genericmodel.component import Model, declare
 from genericmodel.component_factory import *
 

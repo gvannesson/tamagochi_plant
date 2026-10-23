@@ -11,14 +11,14 @@ from pandas import *
 
 import time
 
-import mtg_main as mtg
-import parameters_rapeseed 
-import parameters_faba_bean
-import mtg_visualization 
-import model 
-import tools as files
+from demo.aptos import mtg_main as mtg
+from demo.aptos import parameters_rapeseed 
+from demo.aptos import parameters_faba_bean
+from demo.aptos import mtg_visualization 
+from demo.aptos import model 
+from demo.aptos import tools as files
 
-from openalea.caribu.CaribuScene import CaribuScene
+from alinea.caribu.CaribuScene import CaribuScene
 
 ###################################
 
@@ -78,6 +78,51 @@ class PlotMTG:
 
         return 
 
+    # OPTION 1: We create a MTG from its known properties (NOT COMPLETELY FINISHED!):
+    @staticmethod
+    def create_MTG_from_csv_file():
+        """Creation of the MTG from a initial csv file with properties datas.
+        
+        Returns
+        ------
+        g: MTG 
+            MTG where properties are recorded
+
+        Authors
+        -------
+        Frederic REES
+
+        """
+        print("Create the MTG from csv file...")
+
+        csv_filename='MTG_00003.csv'
+
+        # We first read the csv file where all the properties of each vertex has been previously recorded:
+        dataframe = pd.read_csv(csv_filename, sep=',', header=0)
+    
+        # We initialize an empty MTG:
+        g = MTG()
+
+        # We define the list of vertices and properties to be added to the MTG:
+        list_of_vid = dataframe['node_index']
+        list_of_properties = list(dataframe.columns.values)
+        list_of_properties.remove('node_index')
+
+        # We cover each new vertex to be added to the MTG:
+        for vid in list_of_vid:
+            # We get the previous element on which to add the new element:
+            n = g.node(vid-1)
+            # We now define the new element as the child of the previous element:
+            n = n.add_child()
+            # For this new element, we cover all the properties defined in the csv file:
+            for property in list_of_properties:
+                # For the specific property, we get the single value corresponding to the current vertex ID:
+                selected_series = dataframe[property].loc[dataframe['node_index'] == vid].iloc[0]
+                # NB: we need to add 'iloc[0]' as the previous expression otherwise returns a series, not a single value.
+        
+        return g
+
+    # OPTION 2: We create before a generic MTG:
     @staticmethod
     def create_faba_bean_field_MTG_from_scratch(numofseeds,
                                       nplants,
@@ -104,7 +149,9 @@ class PlotMTG:
 
         """
         print("Create the MTG from scratch...")
-        
+        # We read the environemental/initial conditions:
+        #input_dataframe = pd.read_excel(r'C:\Users\FARRA\AppData\Local\GitHubDesktop\app-3.2.3\src\caracol\src\caracol\APTOS_input_1.xlsx', header=0, sheet_name="scenario")
+
         #We plot the MTG:
         parcelle = mtg.agronomicplot(numofseeds,
                                       nplants,
@@ -248,6 +295,7 @@ class PlotMTG:
 
         return g, parcelle
     
+    
 
     @staticmethod
     def create_MTG_from_Colzette(PlantAge,
@@ -256,7 +304,7 @@ class PlotMTG:
                                   pattern,
                                   inter_row,
                                   plant_density) :
-        """Creation of the MTG base on Colzette model (dynamical simulation)
+        """Creation of the MTG base on Colzette model methodology
         
         Authors
         -------
@@ -274,6 +322,7 @@ class PlotMTG:
 
         data = pd.read_csv("Valeursparam.csv",sep=";")
 
+        ##Cycle 
         Results = pd.DataFrame()
         """
         Results['SurfProp']=list() #Surface proportion repartition
@@ -338,6 +387,40 @@ class PlotMTG:
                                    ins_angle = row["Ins_angle"],
                                    coeff_width = row["coefLenWid"]
                                    )
+            
+            #2bis attribute metabolic properties to the MTG 
+            parameters_rapeseed.metabolism(g,
+                                    fall = False,
+                                    growth = True,
+                                    photosynthesis = 0.1,
+                                    Ei = 100,
+                                    respiration = 0.1,
+                                    potential_photosynthesis= 0.1,
+                                    potential_area= 0.1,
+                                    nitrogen_source = True,
+                                    nitrogen_sink = True,
+                                    nitrogen_content = 10,
+                                    nitrogen_demand = 0.1,
+                                    nitrogen_storage= 0.1,
+                                    nitrogen_import= 0.1,
+                                    nitrogen_export= 0.1,
+                                    rue = 0.1,
+                                    weight_import= 0.1,
+                                    weight_export= 0.1,
+                                    carbon_content= 0.1,
+                                    carbon_demand = 0.1,
+                                    carbon_deficit = 0.1,
+                                    carbon_import= 0.1,
+                                    carbon_export= 0.1,
+                                    carbon_spend= 0.1,
+                                    carbon_growth = 0.1,
+                                    carbon_storage = 0.1,
+                                    carbon_nitrogen_ratio= 0.1,
+                                    nitrogen_fall_threshold_empirical= 0.1,
+                                    Ei_fall_threshold_empirical= 0.1,
+                                    carbon_fall_threshold_mecanism= 0.1,
+                                    nitrogen_fall_threshold_mecanism = 0.1
+                                    )
 
             Temporary_Res = Temporary_Res | g.properties()
         
@@ -515,7 +598,86 @@ class Run :
         
         return
         
+    @staticmethod
+    def field_simulation(default, initial_step, final_step):
+        """Run with a field MTG (multiple plant).
+
+        Parameters
+        ----------
+        default: NoneType 
+            Class parameter to activate the default method simulation
+
+        initial_step : int
+            first time step of the simulation
+        
+        finl_step : int
+            end time step of the simulation
+        
+        Returns
+        -------
+        g: MTG 
+            MTG where properties are recorded
+
+        Authors
+        -------
+        Solen FARRA
+        Frederic REES
+
+        """
+        g, parcelle = PlotMTG.create_field_MTG_from_scratch(numofseeds = 18,
+                                                    nplants = 18,
+                                                    sowing_density = 35,
+                                                    inter_row = 0.1,
+                                                    nrow = 3,#raw by box (PHOCUS)
+                                                    plant_density = 35,
+                                                    DJ = 950,
+                                                    phyllochrone = 0.015,
+                                                    name = 'Solen',
+                                                    species = 'NA',
+                                                    length = None,
+                                                    width = None)#if nplants is not None, keep always length and width = None
+
+        Simulation(g,parcelle, default, initial_step, final_step)
+
+        return g, parcelle
     
+    @staticmethod
+    def colzette_simulation(default, initial_step, final_step):
+        """Run with Colzette model.
+
+        Parameters
+        ----------
+        g: MTG 
+            MTG where properties are recorded
+
+        initial_step : int
+            first time step of the simulation
+        
+        finl_step : int
+            end time step of the simulation
+        
+        Returns
+        -------
+        g: MTG 
+            MTG where properties are recorded
+
+        Authors
+        -------
+        Solen FARRA
+        Armand GRUMEL
+        Laurène PERTHAME
+    
+        """
+        g = PlotMTG.create_MTG_from_Colzette(PlantAge = 950,
+                                  phylloc = 0.015,
+                                  numofseeds = 9,
+                                  pattern = 'Rows',
+                                  inter_row = 0.2,
+                                  plant_density = 35)
+
+        Simulation.main(g, default, initial_step, final_step)
+
+        return g
 
     @staticmethod
     def faba_bean_plant_simulation(default, initial_step, final_step):
@@ -560,12 +722,54 @@ class Run :
 
         return g
     
-    
+    @staticmethod
+    def faba_bean_field_simulation(default, initial_step, final_step):
+        """Run with a faba bean field MTG.
+
+        Parameters
+        ----------
+        g: MTG 
+            MTG where properties are recorded
+
+        initial_step : int
+            first time step of the simulation
+        
+        finl_step : int
+            end time step of the simulation
+        
+        Returns
+        -------
+        g: MTG 
+            MTG where properties are recorded
+
+        Authors
+        -------
+        Solen FARRA
+        Frederic REES
+
+        """
+        g, parcelle = PlotMTG.create_faba_bean_field_MTG_from_scratch(numofseeds = 18,
+                                                    nplants = 18,
+                                                    sowing_density = 35,
+                                                    inter_row = 0.1,
+                                                    nrow = 3,#raw by box (PHOCUS)
+                                                    plant_density = 35,
+                                                    DJ = 950,
+                                                    phyllochrone = 0.015,
+                                                    name = 'Solen',
+                                                    species = 'Faba bean',
+                                                    length = None,
+                                                    width = None)
+
+        Simulation.main(g, parcelle, default, initial_step, final_step)
+
+        return g
+
 
 
 ######################################################################################################################################""
 
-Run.faba_bean_plant_simulation(default = None, 
+Run.field_simulation(default = None, 
                      initial_step = 1, 
                      final_step = 2)
 

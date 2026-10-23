@@ -10,7 +10,7 @@ import numpy as np
 from pandas import *
 import pandas as pd
 
-import mtg_visualization
+import aptos.mtg_visualization as mtg_visualization
 
 ###################################
 

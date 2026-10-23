@@ -13,9 +13,9 @@ A module that
 
 import numpy as np
 from openalea.mtg import mtg
-from soilN import *
-from morpho import *
-from environment import *
+from demo.aptos.backup.soilN import *
+from demo.aptos.backup.morpho import *
+from demo.aptos.backup.environment import *
 from openalea.lpy import *
 
 """ List of all organs and their attributes. 

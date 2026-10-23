@@ -1,12 +1,6 @@
 import random
 
 
-
-############################################################################
-#Besoins en engrais (azote)
-
-################################################################################
-
 SEUIL_BAS = 100
 SEUIL_HAUT = 500
 SANTE_MAX = 1000
@@ -113,3 +107,22 @@ class MaPlante :
 
     def est_vivante(self):
         return self.points_sante > 0
+
+    ##############################################################################
+
+    def tour_de_jeu(self, df_filtre):
+        print(f"\n--- Tour de jeu pour {self.nom} ---")
+
+        # 1. On met à jour l'azote avec le nouveau DataFrame
+        self.calculer_azote(df_filtre)
+
+        # 2. On met à jour la santé en fonction des niveaux actuels
+        self.mettre_a_jour_sante()
+
+        # 3. On affiche l'état
+        print(f"Santé : {self.points_sante}/{SANTE_MAX}")
+        print(f"Azote total : {self.azote_tot}")
+
+        if not self.est_vivante():
+            print(f"Oh non ! {self.nom} est morte...")
+    
