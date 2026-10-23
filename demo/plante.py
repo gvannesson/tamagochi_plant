@@ -1,10 +1,10 @@
 import random
 
 
-SEUIL_BAS = 100
+SEUIL_BAS = 400
 SEUIL_HAUT = 500
-SANTE_MAX = 1000
-NB_TOURS_POUR_AUGMENTER_SANTE = 2
+SANTE_MAX = 500
+NB_TOURS_POUR_AUGMENTER_SANTE = 3
 
 
 class MaPlante :
@@ -26,13 +26,8 @@ class MaPlante :
 
         from main import df_filtre
 
-        self.azote_tot = df_filtre['NitrogenContent'].sum()
-        print(
-            f"L'azote total contenu dans la plante ({self.nom}) est de :"
-            f" {self.azote_tot}"
-        )
+        self.azote_tot = df_filtre['NitrogenContent'].sum() + self.niveau_engrais
 
-        # 👇 On calcule et met à jour l'engrais ICI, au moment où on a l'azote
         self.besoin_engrais = self.calcul_besoin_engrais()
         self.niveau_engrais = self.besoin_engrais
 

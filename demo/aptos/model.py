@@ -40,7 +40,6 @@ def update_MTG(g, outputs):
         Colzette model
 
     """
-    print("Update the MTG...")
 
     # add the missing property
     for param in outputs.keys():

@@ -1,9 +1,4 @@
 
-
-####################################################################################################""
-
-
-
 from utils import demander_nombre_entier_positif
 from plante import MaPlante
 
@@ -36,7 +31,7 @@ while plant.est_vivante():
         print(plant.donner_indices())
         print(f'ta plante a {plant.points_sante} points de santé')
 
-        main.Run.faba_bean_plant_simulation(default = None, initial_step = 2,final_step = 2)
-        print("APTOS est mis à jour")
+        main.Run.faba_bean_plant_simulation(default = None, initial_step = 0, final_step = (nb_tours+1))
+        print("Ta plante a changé !")
 
 print(f'ta plante est morte au bout de {nb_tours} jours')
