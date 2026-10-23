@@ -30,7 +30,7 @@ Les règles du jeu (seuils, santé maximale…) sont des constantes en haut de `
 
 ## Contributeurs
 
-- Solen Fara
+- Solen Farra
 - Gauthier Vannesson
 
 Projet réalisé dans le cadre d'une formation Data Engineer.
