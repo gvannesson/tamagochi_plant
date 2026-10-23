@@ -15,6 +15,9 @@ Un petit jeu en console : prends soin d'une plante virtuelle et garde-la en vie 
 Prérequis : Python 3, sans bibliothèque externe.
 
 ```bash
+Chemin d'installation des packages nécessaire pour l'utilisation du modèle APTOS
+conda create -n openalea_fresh -c openalea3 -c conda-forge openalea.plantgl openalea.lpy openalea.mtg openalea.caribu openalea.libcaribu pandas matplotlib oawidgets-y
+
 python main.py
 ```
 
