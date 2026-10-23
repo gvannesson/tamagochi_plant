@@ -34,7 +34,7 @@ def generate_normalized_bell_curve_points(mean, std_dev, amplitude, N):
 
 ###########################################
 
-def rapeseed_phenotype(g,
+def monstera_phenotype(g,
                        node_length: float = 0.2,
                        leaf_max: float=0.6587057,
                        sd: float= 0.246378,
@@ -100,7 +100,7 @@ def rapeseed_phenotype(g,
 # + add diameter coefficient = stem diam, petiole diam
 # + add limb curve angle = curve
 
-def rapeseed_metabolism(g,
+def monstera_metabolism(g,
     fall : bool = False,
     growth : bool = True,
     photosynthesis : float = None,

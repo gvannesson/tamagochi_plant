@@ -1,0 +1,13 @@
+from math import pi
+from copy import deepcopy
+from morpho import *
+
+module Internode(paramI)
+module Leaf(paramL)
+module Petiole(paramP)
+
+Axiom: Internode(pI)[\(alpha)&(120)Petiole(pP)Leaf(pL)]
+production :
+interpretation : 
+
+endlsystem
