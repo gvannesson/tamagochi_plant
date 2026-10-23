@@ -1,0 +1,92 @@
+######################
+leafshape = NurbsPatch([[(-0.0241355, -0.0549754, -0.00804807, 1), (-0.00877065, -0.00933309, 0.00100194, 1), (0.0221632, 0.0405477, -0.00898557, 1), (-0.00223729, -0.00247516, 0.000385988, 1)], 
+                        [(0.314084, -0.472921, 0.392759, 1), (0.000957513, 0.000400347, 0.33376, 1), (-0.00092555, 0.00517653, 0.332921, 1), (0.408856, 0.483731, 0.413612, 1)], 
+                        [(0.329337, -0.501345, 0.730665, 1), (0.000326354, 0.0164005, 0.665257, 1), (-0.000118909, 0.019707, 0.66817, 1), (0.414001, 0.558038, 0.74373, 1)], 
+                        [(0.00223079, 0.0223592, 0.999352, 1), (0.00112035, 0.028812, 1.0005, 1), (-0.000767699, 0.0327184, 0.999658, 1), (-0.0011293, 0.0361733, 1.00279, 1)]])
+###########################
+from math import pi
+from copy import deepcopy
+from morpho import *
+
+module Apex(paramA)
+module Internode(paramI)
+module Leaf(paramL)
+module Petiole(paramP)
+module Senesce(paramS)
+
+ttime = 1
+Lmax_Petiole = 0.05
+tip_Petiole, b_Petiole = 20, 5
+Amax_Internode = 0.05
+tip_Internode = 20
+b_Internode = 5
+Amax_Leaf = 3
+phyllochrone = 10
+senesce = 15
+fall = 30
+r = 0.05
+dA = 0.04
+
+def dS(Ei, N, C):
+  return(Ei * N)
+def StartEach():
+  global ttime
+  ttime +=1
+
+
+pI = ParameterSet(area = 0.05 * r)
+Axiom: Internode(pI)[&(120)Petiole(ParameterSet(length = 0))Leaf(ParameterSet(Ei = 1,age = 0, area = 0.8, N = 0.8, C = 0.8))]Apex(ParameterSet(age = 0, alpha = 0))
+derivation length: 12
+
+production:
+Apex(p):
+  p = p.copy()
+  if p.alpha<360: 
+    p.alpha+=90
+  else : 
+    p.alpha = 90
+  if p.age == phyllochrone: 
+    p.age = 0
+    produce Internode(ParameterSet(area = 0))[\(p.alpha)&(120)+(p.age*pi)Petiole(ParameterSet(length = 0))Leaf(ParameterSet(Ei = 1,age = 0, area = 0.8, N = 0.8, C = 0.8))]Apex(p)
+  else : 
+    p.age +=1
+    produce Apex(p)
+
+Internode(p):
+  if p.area< Amax_Internode: 
+    p = p.copy()
+    p.area += dA #growth_rate(ttime, Lmax_Internode, tip_Internode, b_Internode)*ttime
+    produce Internode(p)
+Leaf(p):
+  p = p.copy()
+  if p.area < Amax_Leaf:
+    p.area += dS(p.Ei, p.N, p.C)
+    p.age+=1
+    produce Leaf(p)
+  elif p.area == Amax_Leaf and p.age < senesce:
+    p.age +=1
+    produce Leaf(p)
+  else : 
+    p.age +=1
+    produce Senesce(p)
+Petiole(p):
+  if p.length< Lmax_Petiole:
+    p = p.copy()
+    p.length+= growth_rate(ttime, Lmax_Petiole, tip_Petiole, b_Petiole)*ttime
+    produce Petiole(p)
+
+Senesce(p):
+  p = p.copy() 
+  while p.age <fall:
+    p.age+=1
+    produce Senesce(p)
+  produce
+  
+  
+interpretation:
+Internode(p) --> ,(0)_(r)F(p.area / (2* pi * r))
+Leaf(p) --> produce ,(2)@g(leafshape,p.area)
+Senesce(p) --> produce ,(4)@g(leafshape, p.area)
+Apex(p) --> ,(3)@O
+Petiole(p) --> ,(6)_(0.01)F(p.length)
+endlsystem
