@@ -69,7 +69,6 @@ def total(list):
     Solen Farra
 
     """
-    print("Calcul the pool...")
        
     _total = 0
     for i in list:
@@ -980,8 +979,8 @@ class Nitrogen:
 
         for a, b in zip(carbon_growth, nitrogen_import) :
             if b == 0.:
-                print("Cannot divide by zero")
-            
+                print = None
+
             else : 
                 outputs['CarbonNitrogenRatio']= dict(zip(alive,[a/b]))
 
@@ -1400,7 +1399,8 @@ class Growth:
                 outputs['LeafSurface']= dict(zip(growing,[a for a in potential_area]))
             
             else :
-                outputs['LeafSurface']= dict(zip(growing,[(a*b)/c for a, b, c in zip(carbon_growth, area, carbon_content)]))  ####From N content, use SFQN to obtain real leaf area, then convert C content (C unit by area depending on stress N)to obtain biomass
+                with np.errstate(divide='ignore', invalid='ignore'):
+                    outputs['LeafSurface']= dict(zip(growing,[(a*b)/c for a, b, c in zip(carbon_growth, area, carbon_content)]))  ####From N content, use SFQN to obtain real leaf area, then convert C content (C unit by area depending on stress N)to obtain biomass
 
         return update_MTG(g,outputs)
 

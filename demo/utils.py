@@ -27,7 +27,6 @@ def charger_excel(chemin_fichier, nom_feuille=0):
   try:
     # Lecture du fichier Excel
     df = pd.read_excel(chemin_fichier, sheet_name=nom_feuille)
-    print(f'Fichier "{chemin_fichier}" chargé avec succès !')
     return df
   except FileNotFoundError:
     print(f'Erreur : Le fichier {chemin_fichier} est introuvable.')

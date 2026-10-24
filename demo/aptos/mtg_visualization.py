@@ -168,43 +168,43 @@ def ColzetteVisitor(
     turtle.setId(v)
 
 
-#Scene creation
-def prepareScene(scene, width=1200, height=1200, scale=1, x_center=-1.47168e-10, y_center=-0.296039, z_center=7.92478,
-                 x_cam=32.619, y_cam=19.5995, z_cam=43.7766, grid=False):
-    """
-    This function returns the scene that will be used in PlantGL to display the MTG.
-    :param scene: the scene to start with
-    :param width: the width of the graph (in pixels)
-    :param height: the height of the graph (in pixels)
-    :param scale: a dimensionless factor for zooming in or out
-    :param x_center: the x-coordinate of the center of the graph
-    :param y_center: the y-coordinate of the center of the graph
-    :param z_center: the z-coordinate of the center of the graph
-    :param x_cam: the x-coordinate of the camera looking at the center of the graph
-    :param y_cam: the y-coordinate of the camera looking at the center of the graph
-    :param z_cam: the z-coordinate of the camera looking at the center of the graph
-    :param grid: a Boolean describing whether grids should be displayed on the graph
-    :return: scene
-    """
-    #32.619,19.5995,43.7766
-    #-0.333657,0.111502,7.92478
-    #-1.47168e-10,-0.296039,7.92478
-    # We define the coordinates of the point cam_target that will be the center of the graph:
-    cam_target = pgl.Vector3(x_center * scale,
-                             y_center * scale + 0.7,
-                             z_center * scale)
-    # We define the coordinates of the point cam_pos that represents the position of the camera:
-    cam_pos = pgl.Vector3(x_cam * scale,
-                          y_cam * scale,
-                          z_cam * scale)
-    # We position the camera in the scene relatively to the center of the scene:
-    pgl.Viewer.camera.lookAt(cam_pos, cam_target)
-    # We define the dimensions of the graph:
-    pgl.Viewer.frameGL.setSize(width, height)
-    # We define whether grids are displayed or not:
-    pgl.Viewer.grids.set(grid, grid, grid, grid)
+# #Scene creation
+# def prepareScene(scene, width=1200, height=1200, scale=1, x_center=-1.47168e-10, y_center=-0.296039, z_center=7.92478,
+#                  x_cam=32.619, y_cam=19.5995, z_cam=43.7766, grid=False):
+#     """
+#     This function returns the scene that will be used in PlantGL to display the MTG.
+#     :param scene: the scene to start with
+#     :param width: the width of the graph (in pixels)
+#     :param height: the height of the graph (in pixels)
+#     :param scale: a dimensionless factor for zooming in or out
+#     :param x_center: the x-coordinate of the center of the graph
+#     :param y_center: the y-coordinate of the center of the graph
+#     :param z_center: the z-coordinate of the center of the graph
+#     :param x_cam: the x-coordinate of the camera looking at the center of the graph
+#     :param y_cam: the y-coordinate of the camera looking at the center of the graph
+#     :param z_cam: the z-coordinate of the camera looking at the center of the graph
+#     :param grid: a Boolean describing whether grids should be displayed on the graph
+#     :return: scene
+#     """
+#     #32.619,19.5995,43.7766
+#     #-0.333657,0.111502,7.92478
+#     #-1.47168e-10,-0.296039,7.92478
+#     # We define the coordinates of the point cam_target that will be the center of the graph:
+#     cam_target = pgl.Vector3(x_center * scale,
+#                              y_center * scale + 0.7,
+#                              z_center * scale)
+#     # We define the coordinates of the point cam_pos that represents the position of the camera:
+#     cam_pos = pgl.Vector3(x_cam * scale,
+#                           y_cam * scale,
+#                           z_cam * scale)
+#     # We position the camera in the scene relatively to the center of the scene:
+#     pgl.Viewer.camera.lookAt(cam_pos, cam_target)
+#     # We define the dimensions of the graph:
+#     pgl.Viewer.frameGL.setSize(width, height)
+#     # We define whether grids are displayed or not:
+#     pgl.Viewer.grids.set(grid, grid, grid, grid)
 
-    return scene
+#     return scene
 
 
 def scene3d(g, select_visitor=ColzetteVisitor):
@@ -241,7 +241,7 @@ def scene3d(g, select_visitor=ColzetteVisitor):
     # We initialize the scene with the MTG g:
     scene = turt.TurtleFrame(g, visitor=select_visitor, turtle=t, gc=False, all_roots=True)
     # We get a list of all shapes in the scene:
-    scene = prepareScene(scene)
+    #scene = prepareScene(scene)
     #shapes = dict((sh.id, sh) for sh in scene)
 
     # We use the property 'color' of the MTG calculated by the function 'my_colormap':

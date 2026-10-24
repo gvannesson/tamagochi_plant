@@ -49,7 +49,6 @@ def update_MTG(g, outputs):
         Colzette model
 
     """
-    print("Update the MTG...")
 
     # add the missing property
     for param in outputs.keys():
@@ -69,7 +68,6 @@ class PlotMTG:
     Solen FARRA
 
     """
-    print("Choose a method to create the MTG...")
     
     def __init__(self, csv_filename, plant_dataframe, field_dataframe = None) :
         
@@ -104,7 +102,6 @@ class PlotMTG:
         Frederic REES
 
         """
-        print("Create the MTG from scratch...")
         
         #We plot the MTG:
         parcelle = mtg.agronomicplot(numofseeds,
@@ -157,7 +154,6 @@ class PlotMTG:
         Frederic REES
 
         """
-        print("Create the MTG from scratch...")
         # We read the environemental/initial conditions:
         #input_dataframe = pd.read_excel(r'C:\Users\FARRA\AppData\Local\GitHubDesktop\app-3.2.3\src\caracol\src\caracol\APTOS_input_1.xlsx', header=0, sheet_name="scenario")
 
@@ -214,7 +210,6 @@ class PlotMTG:
         Frederic REES
 
         """
-        print("Create the field MTG from scratch...")
         # We read the environemental/initial conditions:
         #input_dataframe = pd.read_excel(r'C:\Users\FARRA\AppData\Local\GitHubDesktop\app-3.2.3\src\caracol\src\caracol\APTOS_input_1.xlsx', header=0, sheet_name="scenario")
 
@@ -289,14 +284,11 @@ class PlotMTG:
         """
         progress = 0 
 
-        print(len(data),"combinations to run. Let's get started !")
-
         for index,row in data.iterrows() :
 
             Temporary_Res = dict()
 
             progress += 1
-            print('Progress : ' , progress, '/', len(data))
             
             #1 create an MTG for a plant at a certain age (DD), for a given phyllochron (n_leaves/DD)
             if pattern=='Rows' or numofseeds==1:
@@ -372,7 +364,6 @@ class Simulation:
     Solen FARRA
 
     """
-    print("Choose and init a simulation scenario...")
     # We define an initial and final step for covering a certain period:
     def __init__(self,
                  g,
@@ -410,16 +401,10 @@ class Simulation:
         Frederic REES
 
         """
-        print("")
-        print("Start simulation...")
-
-        tps1 = time.process_time()
        
         # For each time step covering the simulation period:
         for step in range(initial_step, final_step+1):
-            print("")
-            print("For step", step,":")
-
+        
             outputs = dict()
             leaves = [k for k, v in g.properties()['label'].items()]
             outputs['Time']= dict(zip(leaves,[step]*len(leaves)))
@@ -494,12 +479,6 @@ class Simulation:
             #leaf_results = Results[Results['label']=='Leaf']
             #plant_results = Results[Results['label']=='Plant']
 
-        print("")
-        print("Simulation is done!")
-
-        tps2 = time.process_time()
-        print('Execution time: ', tps2 - tps1)
-
         return g
     
 class Run :
@@ -510,7 +489,7 @@ class Run :
     Solen FARRA
 
     """
-    print("Choose and init a mtg type simulation ...")
+  
 
     def __init__():
         

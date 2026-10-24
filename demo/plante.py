@@ -1,13 +1,16 @@
 import random
 
 
-SEUIL_BAS = 400
-SEUIL_HAUT = 500
+SEUIL_BAS = 100
+SEUIL_HAUT = 300
+SEUIL_BAS_ENGRAIS = 200
+SEUIL_HAUT_ENGRAIS = 400
+
 SANTE_MAX = 10
 NB_TOURS_POUR_AUGMENTER_SANTE = 3
 
-
 class MaPlante :
+
 
     def __init__(self, nom, feuilles):
         self.nom = nom
@@ -22,14 +25,19 @@ class MaPlante :
         self.niveau_engrais = self.besoin_engrais
         self.compteur_bons_tours = 0
 
-    def calculer_azote(self):
+    def calcul_azote(self):
 
-        from data import df_filtre
+        from utils import charger_excel
+        
+        chemin_fichier = ("MTG.xlsx")  
+        df = charger_excel(chemin_fichier)
+        df_filtre = df[df['label'] == 'FababeanLeaf']
 
-        self.azote_tot = df_filtre['NitrogenContent'].sum() + self.niveau_engrais
+
+        self.azote_tot = df_filtre['NitrogenDemand'].sum()
 
         self.besoin_engrais = self.calcul_besoin_engrais()
-        self.niveau_engrais = self.besoin_engrais
+        self.niveau_engrais = df_filtre['NitrogenContent'].sum()
 
         return self.azote_tot
 
@@ -38,7 +46,7 @@ class MaPlante :
         return besoin_eau
     
     def calcul_besoin_engrais(self):
-        besoin_engrais = self.azote_tot + 3
+        besoin_engrais = self.azote_tot
         return besoin_engrais
 
     def __str__(self):
@@ -50,26 +58,36 @@ class MaPlante :
     def recevoir_engrais(self, ajout_engrais):
         self.niveau_engrais = self.niveau_engrais+ajout_engrais
 
+        return self.niveau_engrais
+
     def consommation_eau(self):
         self.niveau_eau = max(0, self.niveau_eau-self.besoin_eau)
 
     def consommation_engrais(self):
         self.niveau_engrais = max(0, self.niveau_engrais-self.besoin_engrais)
 
-    def classement_niveau(self, niveau, besoin):
-        if niveau < SEUIL_BAS * besoin:
+    def classement_niveau_eau(self, niveau):
+        if niveau < SEUIL_BAS:
             return "trop_bas"
-        elif niveau > SEUIL_HAUT * besoin:
+        elif niveau > SEUIL_HAUT:
             return "trop_haut"
         else:
             return "ok"
 
+    def classement_niveau_engrais(self, niveau):
+            if niveau < SEUIL_BAS_ENGRAIS:
+                return "trop_bas"
+            elif niveau > SEUIL_HAUT_ENGRAIS:
+                return "trop_haut"
+            else:
+                return "ok"
+
     def donner_indices(self):
-        zone_eau = self.classement_niveau(self.niveau_eau, self.besoin_eau)
-        zone_engrais = self.classement_niveau(self.niveau_engrais, self.besoin_engrais)
+        zone_eau = self.classement_niveau_eau(self.niveau_eau)
+        zone_engrais = self.classement_niveau_engrais(self.niveau_engrais)
 
         indices_eau = {
-            "trop_bas": "La terre est sèche et les feuilles jaunissent.",
+            "trop_bas": "La terre est sèche et les feuilles peuvent jaunir.",
             "ok": "La terre est humide juste comme il faut.",
             "trop_haut": "La terre est détrempée et les feuilles sont flétries.",
         }
@@ -83,8 +101,8 @@ class MaPlante :
 
 
     def mettre_a_jour_sante(self):
-        zone_eau = self.classement_niveau(self.niveau_eau, self.besoin_eau)
-        zone_engrais = self.classement_niveau(self.niveau_engrais, self.besoin_engrais)
+        zone_eau = self.classement_niveau_eau(self.niveau_eau)
+        zone_engrais = self.classement_niveau_engrais(self.niveau_engrais)
 
         if zone_eau == "ok" and zone_engrais == "ok":
             self.compteur_bons_tours += 1
