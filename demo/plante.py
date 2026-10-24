@@ -50,7 +50,7 @@ class MaPlante :
         return besoin_engrais
 
     def __str__(self):
-        return f'{self.nom} est une jolie plante avec {self.feuilles} feuilles'
+        return f'{self.nom} est une jolie plante avec {self.feuilles} feuilles 🌱'
 
     def recevoir_eau(self, ajout_eau):
         self.niveau_eau = self.niveau_eau + ajout_eau
@@ -87,14 +87,14 @@ class MaPlante :
         zone_engrais = self.classement_niveau_engrais(self.niveau_engrais)
 
         indices_eau = {
-            "trop_bas": "La terre est sèche et les feuilles peuvent jaunir.",
-            "ok": "La terre est humide juste comme il faut.",
-            "trop_haut": "La terre est détrempée et les feuilles sont flétries.",
+            "trop_bas": "La terre est sèche et les feuilles peuvent jaunir 🥵",
+            "ok": "La terre est humide juste comme il faut 👍",
+            "trop_haut": "La terre est détrempée et les feuilles sont flétries 🌊",
         }
         indices_engrais = {
-            "trop_bas": "Les feuilles sont pâles et la plante pousse lentement.",
-            "ok": "Les feuilles sont d'un beau vert.",
-            "trop_haut": "Le bord des feuilles brunit et une croûte blanche couvre la terre.",
+            "trop_bas": "Les feuilles sont pâles et la plante pousse lentement 🤒",
+            "ok": "Les feuilles sont d'un beau vert 👍",
+            "trop_haut": "Le bord des feuilles brunit et une croûte blanche couvre la terre 😵",
         }
 
         return indices_eau[zone_eau] + "\n" + indices_engrais[zone_engrais]
